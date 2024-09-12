@@ -1,3 +1,4 @@
+import { createBlogInput, editBlogInput } from "@jenil-desai/medium-common";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PrismaClient } from "@prisma/client/edge";
 import { createFactory } from "hono/factory";
@@ -10,6 +11,13 @@ export const createPost = factory.createHandlers(async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = createBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    c.json({ error: "Invalid Input" });
+  }
+
   const userId = c.get("userId");
 
   const post = await prisma.post.create({
@@ -29,6 +37,13 @@ export const editPost = factory.createHandlers(async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = editBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    c.json({ error: "Invalid Input" });
+  }
+
   const userId = c.get("userId");
 
   prisma.post.update({

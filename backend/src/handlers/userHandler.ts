@@ -1,3 +1,4 @@
+import { signInInput, signUpInput } from "@jenil-desai/medium-common";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PrismaClient } from "@prisma/client/edge";
 import { createFactory } from "hono/factory";
@@ -11,6 +12,12 @@ export const signupUser = factory.createHandlers(async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = signUpInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    c.json({ error: "Invalid Format" });
+  }
 
   const ExistsUser = await prisma.user.findUnique({
     where: {
@@ -41,6 +48,12 @@ export const singInUser = factory.createHandlers(async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = signInInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    c.json({ error: "Invalid Format" });
+  }
 
   const user = await prisma.user.findUnique({
     where: {
