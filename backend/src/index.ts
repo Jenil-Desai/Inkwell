@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 
-import userRoute from "./routes/user";
-import blogRoute from "./routes/blog";
+import userRoute from "./routes/userRouter";
+import blogRoute from "./routes/blogRouter";
 
 const app = new Hono();
 
