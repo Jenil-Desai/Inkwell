@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 
-import userRoute from "./routes/userRouter";
-import blogRoute from "./routes/blogRouter";
+import { userRouter } from "./routes/userRouter";
+import { postHandler } from "./routes/postRouter";
 
 const app = new Hono();
 
-app.route("/api/v1/user", userRoute);
-app.route("/api/v1/blog", blogRoute);
+app.route("/api/v1/user", userRouter);
+app.route("/api/v1/blog", postHandler);
 
 export default app;

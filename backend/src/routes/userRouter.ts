@@ -1,10 +1,16 @@
 import { Hono } from "hono";
 import { signupUser, singInUser } from "../handlers/userHandler";
 
-const app = new Hono<{ Bindings: { DATABASE_URL: string; JWT_SECRET: string } }>();
+export const userRouter = new Hono<{
+  Bindings: {
+    DATABASE_URL: string;
+    JWT_SECRET: string;
+  };
+  Variables: {
+    userId: string;
+  };
+}>();
 
-app.post("/signup", ...signupUser);
+userRouter.post("/signup", ...signupUser);
 
-app.post("/signin", ...singInUser);
-
-export default app;
+userRouter.post("/signin", ...singInUser);

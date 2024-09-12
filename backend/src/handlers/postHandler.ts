@@ -1,0 +1,72 @@
+import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "@prisma/client/edge";
+import { createFactory } from "hono/factory";
+
+const factory = createFactory();
+
+export const createPost = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+  const userId = c.get("userId");
+
+  const post = await prisma.post.create({
+    data: {
+      title: body.title,
+      content: body.content,
+      authorId: userId,
+    },
+  });
+
+  return c.json({ id: post.id });
+});
+
+export const editPost = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+  const userId = c.get("userId");
+
+  prisma.post.update({
+    where: {
+      id: body.id,
+      authorId: userId,
+    },
+    data: {
+      title: body.title,
+      content: body.content,
+    },
+  });
+
+  return c.text("updated post");
+});
+
+export const getPost = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const id = c.req.param("id");
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return c.json(post);
+});
+
+export const getBulkPost = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const posts = await prisma.post.findMany();
+
+  return c.json({ posts });
+});
