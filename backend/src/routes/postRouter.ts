@@ -18,6 +18,6 @@ postHandler.post("/", ...createPost);
 
 postHandler.put("/", ...editPost);
 
-postHandler.get("/:id", ...getPost);
-
 postHandler.get("/bulk", ...getBulkPost);
+
+postHandler.get("/:id", ...getPost);

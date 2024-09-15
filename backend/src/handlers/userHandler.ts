@@ -21,7 +21,7 @@ export const signupUser = factory.createHandlers(async (c) => {
 
   const ExistsUser = await prisma.user.findUnique({
     where: {
-      email: body.email,
+      email: body.username,
     },
   });
 
@@ -32,14 +32,15 @@ export const signupUser = factory.createHandlers(async (c) => {
 
   const newUser = await prisma.user.create({
     data: {
-      email: body.email,
+      email: body.username,
       name: body.name,
       password: body.password,
     },
   });
 
   const token = await sign({ id: newUser.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3 }, c.env.JWT_SECRET);
-  return c.json({ token });
+  c.status(200);
+  return c.json(token);
 });
 
 export const singInUser = factory.createHandlers(async (c) => {
@@ -57,7 +58,7 @@ export const singInUser = factory.createHandlers(async (c) => {
 
   const user = await prisma.user.findUnique({
     where: {
-      email: body.email,
+      email: body.username,
       password: body.password,
     },
   });
@@ -68,5 +69,6 @@ export const singInUser = factory.createHandlers(async (c) => {
   }
 
   const token = await sign({ id: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3 }, c.env.JWT_SECRET);
-  return c.json({ token });
+  c.status(200);
+  return c.json(token);
 });
