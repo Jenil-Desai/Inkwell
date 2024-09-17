@@ -4,13 +4,13 @@ import Avatar from "./Avatar";
 export default function FullBlog({ blog }: { blog: Blog }) {
   return (
     <div className="flex justify-center">
-      <div className="grid grid-cols-12 px-10 w-full pt-12 max-w-screen-2xl">
-        <div className="col-span-8">
+      <div className="grid grid-cols-1 md:grid-cols-12 space-y-4 px-10 w-full pt-12 max-w-screen-2xl">
+        <div className="grid-cols-1 md:col-span-8">
           <div className="text-5xl font-extrabold">{blog.title}</div>
           <div className="text-slate-500 pt-2">Posted On 9th November 2024</div>
           <div className="pt-4">{blog.content}</div>
         </div>
-        <div className="col-span-4">
+        <div className="grid-cols-1 md:col-span-4">
           <div className="text-slate-600 text-lg">Author</div>
           <div className="flex">
             <div className="pr-4 flex justify-center flex-col">
