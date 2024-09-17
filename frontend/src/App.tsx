@@ -5,11 +5,13 @@ import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
 import Publish from "./pages/Publish";
 import Home from "./pages/Home";
+import Appbar from "./components/Appbar";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <Appbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

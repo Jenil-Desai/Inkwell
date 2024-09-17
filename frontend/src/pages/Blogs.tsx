@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Appbar from "../components/Appbar";
+
+import BlogSkeleton from "../components/BlogSkeleton";
 import BlogCard from "../components/BlogCard";
 import { useBlogs } from "../hooks";
-import { useNavigate } from "react-router-dom";
 
 export default function Blogs() {
   const { loading, blogs } = useBlogs();
@@ -15,19 +16,26 @@ export default function Blogs() {
   }, []);
 
   if (loading) {
-    return loading;
+    return (
+      <div className="flex justify-center">
+        <div>
+          <BlogSkeleton />
+          <BlogSkeleton />
+          <BlogSkeleton />
+          <BlogSkeleton />
+          <BlogSkeleton />
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <Appbar />
-      <div className="flex justify-center">
+    <div className="flex justify-center">
+      <div>
         <div>
-          <div>
-            {blogs.map((blog) => (
-              <BlogCard key={blog.id} id={blog.id} authorName={blog.author.name || "Anonymous User"} title={blog.title} content={blog.content} publishedDate={"2nd Feb 2024"} />
-            ))}
-          </div>
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} id={blog.id} authorName={blog.author.name || "Anonymous User"} title={blog.title} content={blog.content} publishedDate={"2nd Feb 2024"} />
+          ))}
         </div>
       </div>
     </div>
