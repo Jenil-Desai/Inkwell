@@ -55,6 +55,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
               />
             ) : null}
             <LablledInput
+              type="email"
               label="Username"
               placholder="johndoe@gmail.com"
               onChange={(e) => {

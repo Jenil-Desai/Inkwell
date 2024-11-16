@@ -1,92 +1,134 @@
-# 🚀 Medium Clone
+# 📝 Medium Clone
 
-A fully functional Medium-like platform built using modern web technologies. This project is focused on providing a rich, interactive experience for users to create and share content, following the same core principles as Medium.
+A fully functional **Medium-like platform** built using modern web technologies. This project focuses on providing a rich, interactive experience for users to create and share content, following the same core principles as Medium.
 
-## 🌟 Features
+---
 
-- 🔐 User authentication with JWT
-- ✍️ Create, read, update, and delete (CRUD) articles
-- 📝 Rich text editing for articles
+## 📑 Table of Contents
 
-## 🛠️ Tech Stack
+1. [Overview](#-overview)
+2. [Technologies](#-technologies)
+3. [Packages & Libraries Used](#-packages--libraries-used)
+4. [Getting Started](#-getting-started)
+5. [Setup](#-setup)
+6. [Features](#-features)
+7. [Demo & Screenshots](#-demo--screenshots)
+8. [Acknowledgments](#-acknowledgments)
+9. [License](#-license)
 
-### 💻 Frontend
+---
 
-- ⚛️ **React**: A JavaScript library for building user interfaces.
-- 🟦 **TypeScript**: Adds static typing to JavaScript, improving the developer experience and reducing bugs.
-- 🔍 **Zod**: For schema validation and type inference, providing type safety for frontend types.
+## 🌟 Overview
 
-### ⚙️ Backend
+A modern web application inspired by **Medium**, allowing users to create, share, and interact with content. This project incorporates user authentication, rich text editing, and a sleek UI, making it a robust and scalable platform.
 
-- ☁️ **Cloudflare Workers**: Serverless execution environment for backend logic.
-- ⚡ **Hono**: A web framework for Cloudflare Workers, ensuring efficient and quick routing.
-- 🗄️ **Prisma**: An ORM that simplifies database operations and provides connection pooling to handle large traffic efficiently.
-- 🐘 **PostgreSQL**: A robust relational database used for storing articles, user data.
-- 🔐 **JWT (JSON Web Tokens)**: Used for secure user authentication.
+---
+
+## 💻 Technologies
+
+Below is a breakdown of the core technologies used in this project.
+
+| 🌐 Web Framework | Backend               | Database         | Language       |
+| ---------------- | --------------------- | ---------------- | -------------- |
+| **React.js**     | **Cloudflare Worker** | **Postgres SQL** | **TypeScript** |
+
+---
+
+## 📦 Packages / Libraries Used
+
+This project uses the following essential libraries and packages:
+
+| Package / Library    | Purpose                   |
+| -------------------- | ------------------------- |
+| `Hono`               | Lightweight web framework |
+| `Prisma ORM`         | Database ORM              |
+| `Prisma Accelerates` | Optimized Prisma Pooling  |
+| `Axios`              | API requests              |
+| `React-Router-Dom`   | Frontend routing          |
+| `Tailwind CSS`       | Styling framework         |
+| `zod`                | Schema validation         |
+
+---
 
 ## 🚀 Getting Started
 
-### 📋 Prerequisites
-
-- 🟢 **Node.js**: Ensure that you have Node.js installed on your machine.
-- 🐘 **PostgreSQL**: Set up a PostgreSQL database for local development.
-- ☁️ **Cloudflare Account**: Required to deploy the backend on Cloudflare Workers.
-
-### 🔧 Installation
+Follow these steps to set up the project in your local environment:
 
 1. Clone the repository:
-
    ```bash
-   git clone https://github.com/Jenil-Desai/Medium-Clone.git
-   cd Medium-Clone
+   git clone https://github.com/Jenil-Desai/medium-clone.git
    ```
-
 2. Install dependencies:
-
    ```bash
+   cd common
+   npm install
+   cd ../backend
+   npm install
+   cd ../frontend
    npm install
    ```
-
-3. Set up environment variables by creating a `.env` file in the root directory. The required variables include:
-
+3. Configure Envirmental Variables by creating `.env` and add :
    ```env
-   DATABASE_URL=your_postgres_database_url
-   JWT_SECRET=your_jwt_secret
-   CLOUDFLARE_API_TOKEN=your_cloudflare_api_token
+   DATABASE_URL="Your Postgres Database Direct URL"
+   ```
+4. Add Other ENVs into `backend/wrangler.toml` as :
+   ```toml
+   [vars]
+   DATABASE_URL="Your Prisma Accelrated URL"
+   JWT_SECRET="Unique JWT Secret"
    ```
 
-4. Initialize the Prisma ORM:
+---
 
+## ⚙️ Setup
+
+1. Start the project backend:
    ```bash
-   npx prisma migrate dev
-   ```
-
-5. Start the development server:
-
-   ```bash
+   cd backend
    npm run dev
    ```
-
-### 🚀 Deployment
-
-To deploy the backend to Cloudflare Workers:
-
-1. Log in to your Cloudflare account using the CLI:
-
+2. Start the project frontend:
    ```bash
-   wrangler login
+   ccd frontend
+   npm run dev
    ```
+3. Access the application at `localhost:5173` and explore the website.
 
-2. Deploy the backend:
+---
 
-   ```bash
-   npm run deploy
-   ```
+## 🎯 Features
 
-### 🤝 Contributing
+Explore the unique features available in this application:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. 🔐 **User Authentication with JWT**:
+   - Secure login and signup process using JSON Web Tokens.
+2. ✍️ **Create and Read Articles**:
+   - Rich functionality for users to create articles and read published ones.
+3. 📝 **Rich Text Editing**:
+   - Intuitive text editor for drafting articles.
 
-### 📄 License
+---
 
-This project is licensed under the MIT License.
+## 🔗 Demo & Screenshots
+
+- [Demo](https://medium-clone-two-pi.vercel.app/)
+
+---
+
+## 🙏 Acknowledgments
+
+We’d like to thank the following resources:
+
+- **[Harkirat 100xDevs Course](https://100xdevs.com/)** - Backend development.
+- **[Hono Docs](https://hono.dev/docs)** - Framework documentation.
+- **[Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)** - Serverless platform documentation.
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
+
+---
+
+### Enjoy exploring and contributing to the Medium Clone!
