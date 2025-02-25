@@ -1,15 +1,23 @@
-import { useNavigate } from "react-router-dom";
 import { useUserBlogs } from "../../hooks";
-import { Card, Chip, Typography } from "@material-tailwind/react";
+import { Card, Chip, Menu, MenuHandler, MenuItem, MenuList, Typography } from "@material-tailwind/react";
 import { TABLE_HEAD } from "./TableHeads";
 import MyBlogsSkeleton from "./MyBlogsSkeleton";
 
 export default function MyBlogs() {
   const { loading, blogs } = useUserBlogs();
-  const navigate = useNavigate();
 
   if (loading) {
     return <MyBlogsSkeleton />;
+  }
+
+  if (blogs.length === 0) {
+    return (
+      <Card className="h-full w-full flex items-center justify-center p-52" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Typography variant="h5" color="blue-gray" className="font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+          You have no blogs yet.
+        </Typography>
+      </Card>
+    );
   }
 
   return (
@@ -28,7 +36,7 @@ export default function MyBlogs() {
         </thead>
         <tbody>
           {blogs.map(({ id, title, createdAt, published }, index) => (
-            <tr key={index} className="even:bg-blue-gray-50/50 cursor-pointer" onClick={() => navigate(`/blog/${id}`)}>
+            <tr key={index} className="even:bg-blue-gray-50/50 cursor-pointer">
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                   {title}
@@ -40,12 +48,21 @@ export default function MyBlogs() {
                 </Typography>
               </td>
               <td className="p-4">
-                <Chip value={published ? "Published" : "Draft"} size="md" className={`w-fit ${published ? "bg-green-500" : "bg-red-500"}`} />
+                <Chip color={published ? "green" : "red"} value={published ? "Published" : "Draft"} size="md" className="w-fit" />
               </td>
               <td className="p-4">
-                <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                  Edit
-                </Typography>
+                <Menu>
+                  <MenuHandler>
+                    <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                      Edit
+                    </Typography>
+                  </MenuHandler>
+                  <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                      View
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </td>
             </tr>
           ))}

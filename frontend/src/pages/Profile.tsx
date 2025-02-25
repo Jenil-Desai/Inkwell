@@ -32,7 +32,7 @@ export default function Profile() {
         placeholder={undefined}
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
-        className="px-5"
+        className="px-1"
       >
         {profileTabs.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
