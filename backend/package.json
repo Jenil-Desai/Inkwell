@@ -8,7 +8,7 @@
     "@jenil-desai/medium-common": "^1.0.0",
     "@prisma/client": "^5.19.1",
     "@prisma/extension-accelerate": "^1.1.0",
-    "hashless": "^1.0.10",
+    "hashless": "^1.0.12",
     "hono": "^4.6.1",
     "prisma": "^5.19.1"
   },

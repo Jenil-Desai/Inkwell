@@ -4,17 +4,35 @@ import axios from "axios";
 
 import TextEditor from "../components/TextEditor";
 import { BACKEND_URL } from "../Config";
+import useToken from "../hooks/useToken";
 
 export default function Publish() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const { token } = useToken();
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!token) {
       navigate("/signin");
     }
   }, []);
+
+  async function saveBlog() {
+    const response = await axios.post(
+      `${BACKEND_URL}/blog`,
+      {
+        title,
+        content: description,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    navigate(`/blog/${response.data.id}`);
+  }
 
   return (
     <div className="flex justify-center w-full pt-8">
@@ -33,25 +51,7 @@ export default function Publish() {
             setDescription(e.target.value);
           }}
         />
-        <button
-          onClick={async () => {
-            const response = await axios.post(
-              `${BACKEND_URL}/blog`,
-              {
-                title,
-                content: description,
-              },
-              {
-                headers: {
-                  Authorization: localStorage.getItem("token"),
-                },
-              }
-            );
-            navigate(`/blog/${response.data.id}`);
-          }}
-          type="submit"
-          className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-        >
+        <button onClick={saveBlog} type="submit" className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
           Publish post
         </button>
       </div>

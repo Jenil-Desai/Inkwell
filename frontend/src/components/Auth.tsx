@@ -5,6 +5,7 @@ import LablledInput from "./LablledInput";
 import axios from "axios";
 import { BACKEND_URL } from "../Config";
 import Alert from "./Alert";
+import useToken from "../hooks/useToken";
 
 export default function Auth({ type }: { type: "signup" | "signin" }) {
   const [postInputs, setPostInputs] = useState<signUpInput>({
@@ -14,12 +15,13 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
   });
   const [alert, setAlert] = useState({ vis: false, type: "error", msg: "" });
   const navigate = useNavigate();
+  const { setToken } = useToken();
 
   async function sendRequest() {
     try {
       const response = await axios.post(`${BACKEND_URL}/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
       const jwt = response.data;
-      localStorage.setItem("token", jwt.token);
+      setToken(jwt.token);
       navigate("/blogs");
     } catch (error: any) {
       setAlert({ vis: true, type: "error", msg: error.response.data.error });
