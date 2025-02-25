@@ -1,11 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../Config";
+import { BACKEND_URL } from "../constants/Config";
 
 export interface Blog {
   title: string;
   content: string;
   id: number;
+  author: {
+    name: string;
+  };
+}
+
+export interface UserBlog {
+  id: number;
+  title: string;
+  published: string;
+  createdAt: string;
   author: {
     name: string;
   };
@@ -41,6 +51,23 @@ export const useBlogs = () => {
       setloading(false);
     });
   }, []);
+
+  return { loading, blogs };
+};
+
+export const useUserBlogs = () => {
+  const [loading, setloading] = useState(true);
+  const [blogs, setBlogs] = useState<UserBlog[]>([]);
+  const jwt = localStorage.getItem("token");
+
+  useEffect(() => {
+    axios.get(`${BACKEND_URL}/blog/user-blogs`, { headers: { Authorization: jwt } }).then((res) => {
+      setBlogs(res.data.posts);
+      setloading(false);
+    });
+  }, []);
+
+  console.log(blogs);
 
   return { loading, blogs };
 };

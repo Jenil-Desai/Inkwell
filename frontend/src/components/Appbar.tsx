@@ -30,7 +30,9 @@ export default function Appbar() {
             >
               Log Out
             </button>
-            <Avatar name={"Jenil Desai"} size={8} />
+            <Link to={"/profile"}>
+              <Avatar name={"Jenil Desai"} size={8} />
+            </Link>
           </>
         ) : (
           <>

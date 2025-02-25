@@ -18,6 +18,7 @@ export type signInInput = z.infer<typeof signInInput>;
 export const createBlogInput = z.object({
   title: z.string(),
   content: z.string(),
+  published: z.boolean(),
 });
 
 export type createBlogInput = z.infer<typeof createBlogInput>;

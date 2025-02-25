@@ -25,6 +25,7 @@ export const createPost = factory.createHandlers(async (c) => {
       title: body.title,
       content: body.content,
       authorId: userId,
+      published: body.published,
     },
   });
 
@@ -104,6 +105,33 @@ export const getBulkPost = factory.createHandlers(async (c) => {
     },
     where: {
       published: true,
+    },
+  });
+
+  return c.json({ posts });
+});
+
+export const getUserPosts = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const userId = c.get("userId");
+
+  const posts = await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      published: true,
+      createdAt: true,
+      author: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    where: {
+      authorId: userId,
     },
   });
 

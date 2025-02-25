@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LablledInput from "./LablledInput";
 import axios from "axios";
-import { BACKEND_URL } from "../Config";
+import { BACKEND_URL } from "../constants/Config";
 import Alert from "./Alert";
 import useToken from "../hooks/useToken";
 
