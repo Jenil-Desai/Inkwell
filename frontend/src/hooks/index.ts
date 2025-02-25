@@ -12,7 +12,7 @@ export interface Blog {
 }
 
 export interface UserBlog {
-  id: number;
+  id: string;
   title: string;
   published: string;
   createdAt: string;

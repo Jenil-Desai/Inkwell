@@ -14,10 +14,12 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
     password: "",
   });
   const [alert, setAlert] = useState({ vis: false, type: "error", msg: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setToken } = useToken();
 
   async function sendRequest() {
+    setLoading(true);
     try {
       const response = await axios.post(`${BACKEND_URL}/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
       const jwt = response.data;
@@ -26,6 +28,8 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
     } catch (error: any) {
       setAlert({ vis: true, type: "error", msg: error.response.data.error });
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -48,6 +52,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
               <LablledInput
                 label="Name"
                 placholder="John Doe"
+                disabled={loading}
                 onChange={(e) => {
                   setPostInputs({
                     ...postInputs,
@@ -60,6 +65,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
               type="email"
               label="Username"
               placholder="johndoe@gmail.com"
+              disabled={loading}
               onChange={(e) => {
                 setPostInputs({
                   ...postInputs,
@@ -71,6 +77,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
               label="Password"
               placholder="JohnDoe123"
               type="password"
+              disabled={loading}
               onChange={(e) => {
                 setPostInputs({
                   ...postInputs,
@@ -78,7 +85,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
                 });
               }}
             />
-            <button onClick={sendRequest} type="button" className="w-full mt-8 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+            <button disabled={loading} onClick={sendRequest} type="button" className="w-full mt-8 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
               {type === "signin" ? "Sign In" : "Sign Up"}
             </button>
           </div>

@@ -137,3 +137,21 @@ export const getUserPosts = factory.createHandlers(async (c) => {
 
   return c.json({ posts });
 });
+
+export const deletePost = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const id = c.req.param("id");
+  const userId = c.get("userId");
+
+  await prisma.post.delete({
+    where: {
+      id,
+      authorId: userId,
+    },
+  });
+
+  return c.json({ success: true });
+});

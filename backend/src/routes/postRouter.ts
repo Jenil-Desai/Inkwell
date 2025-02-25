@@ -1,4 +1,4 @@
-import { createPost, editPost, getBulkPost, getPost, getUserPosts } from "../handlers/postHandler";
+import { createPost, deletePost, editPost, getBulkPost, getPost, getUserPosts } from "../handlers/postHandler";
 import { verifyToken } from "../middlewares/verifyToken";
 import { Hono } from "hono";
 
@@ -21,3 +21,5 @@ postHandler.get("/bulk", ...getBulkPost);
 postHandler.get("/user-blogs", verifyToken, ...getUserPosts);
 
 postHandler.get("/:id", ...getPost);
+
+postHandler.delete("/:id", verifyToken, ...deletePost);
