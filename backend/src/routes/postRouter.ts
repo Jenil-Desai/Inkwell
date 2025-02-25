@@ -12,11 +12,9 @@ export const postHandler = new Hono<{
   };
 }>();
 
-postHandler.use("/*", verifyToken);
+postHandler.post("/", verifyToken, ...createPost);
 
-postHandler.post("/", ...createPost);
-
-postHandler.put("/", ...editPost);
+postHandler.put("/", verifyToken, ...editPost);
 
 postHandler.get("/bulk", ...getBulkPost);
 
