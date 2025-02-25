@@ -3,6 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { PrismaClient } from "@prisma/client/edge";
 import { createFactory } from "hono/factory";
 import { sign } from "hono/jwt";
+import { hash, verify } from "hashless";
 
 const factory = createFactory();
 
@@ -11,64 +12,64 @@ export const signupUser = factory.createHandlers(async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const body = await c.req.json();
+  const body = await c.req.json<signUpInput>();
 
-  const { success } = signUpInput.safeParse(body);
+  const { success, data } = signUpInput.safeParse(body);
   if (!success) {
-    c.status(411);
-    c.json({ error: "Invalid Format" });
+    return c.json({ error: "Invalid Format" }, 411);
   }
 
-  const ExistsUser = await prisma.user.findUnique({
+  const existsUser = await prisma.user.findUnique({
     where: {
-      email: body.username,
+      email: data.username,
     },
   });
 
-  if (ExistsUser) {
-    c.status(400);
-    return c.json({ error: "User Already Exsist Using Provided Email" });
+  if (existsUser) {
+    return c.json({ error: "User with this email already exists" }, 400);
   }
+
+  const hashedPassword = await hash(data.password);
 
   const newUser = await prisma.user.create({
     data: {
-      email: body.username,
-      name: body.name,
-      password: body.password,
+      email: data.username,
+      name: data.name,
+      password: hashedPassword,
     },
   });
 
   const token = await sign({ id: newUser.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3 }, c.env.JWT_SECRET);
-  c.status(200);
-  return c.json(token);
+  return c.json({ token }, 200);
 });
 
-export const singInUser = factory.createHandlers(async (c) => {
+export const signInUser = factory.createHandlers(async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const body = await c.req.json();
+  const body = await c.req.json<signInInput>();
 
-  const { success } = signInInput.safeParse(body);
+  const { success, data } = signInInput.safeParse(body);
   if (!success) {
-    c.status(411);
-    c.json({ error: "Invalid Format" });
+    return c.json({ error: "Invalid Format" }, 411);
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      email: body.username,
-      password: body.password,
+      email: data.username,
     },
   });
 
   if (!user) {
-    c.status(403);
-    return c.json({ error: "User Creadtionals Are Incorrect" });
+    return c.json({ error: "No user with this email id" }, 403);
+  }
+
+  const result = await verify(data.password, user.password);
+  if (!result) {
+    return c.json({ error: "Password Is Incorrect" }, 403);
   }
 
   const token = await sign({ id: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3 }, c.env.JWT_SECRET);
-  c.status(200);
-  return c.json(token);
+  return c.json({ token }, 200);
 });

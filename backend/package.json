@@ -8,11 +8,13 @@
     "@jenil-desai/medium-common": "^1.0.0",
     "@prisma/client": "^5.19.1",
     "@prisma/extension-accelerate": "^1.1.0",
+    "hashless": "^1.0.10",
     "hono": "^4.6.1",
     "prisma": "^5.19.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/node": "^22.13.5",
     "wrangler": "^3.57.2"
   }
 }

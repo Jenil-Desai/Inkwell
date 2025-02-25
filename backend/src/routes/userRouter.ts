@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { signupUser, singInUser } from "../handlers/userHandler";
+import { signupUser, signInUser } from "../handlers/userHandler";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -13,4 +13,4 @@ export const userRouter = new Hono<{
 
 userRouter.post("/signup", ...signupUser);
 
-userRouter.post("/signin", ...singInUser);
+userRouter.post("/signin", ...signInUser);

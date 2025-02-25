@@ -19,7 +19,7 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
     try {
       const response = await axios.post(`${BACKEND_URL}/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
       const jwt = response.data;
-      localStorage.setItem("token", jwt);
+      localStorage.setItem("token", jwt.token);
       navigate("/blogs");
     } catch (error: any) {
       setAlert({ vis: true, type: "error", msg: error.response.data.error });

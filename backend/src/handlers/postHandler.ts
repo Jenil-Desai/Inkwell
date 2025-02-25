@@ -102,6 +102,9 @@ export const getBulkPost = factory.createHandlers(async (c) => {
         },
       },
     },
+    where: {
+      published: true,
+    },
   });
 
   return c.json({ posts });

@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://backend.jenildevloper91.workers.dev/api/v1";
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
