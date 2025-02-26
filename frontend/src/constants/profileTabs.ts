@@ -1,4 +1,5 @@
 import MyBlogs from "../components/profile-components/MyBlogs";
+import MyProfile from "../components/profile-components/MyProfile";
 
 export type profileTabs = {
   label: string;
@@ -15,6 +16,6 @@ export const profileTabs: profileTabs[] = [
   {
     label: "My Profile",
     value: "my-profile",
-    desc: MyBlogs,
+    desc: MyProfile,
   },
 ];

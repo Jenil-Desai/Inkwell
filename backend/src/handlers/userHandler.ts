@@ -1,4 +1,4 @@
-import { signInInput, signUpInput } from "@jenil-desai/medium-common";
+import { editUserDetails, signInInput, signUpInput } from "@jenil-desai/medium-common";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PrismaClient } from "@prisma/client/edge";
 import { createFactory } from "hono/factory";
@@ -72,4 +72,64 @@ export const signInUser = factory.createHandlers(async (c) => {
 
   const token = await sign({ id: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3 }, c.env.JWT_SECRET);
   return c.json({ token }, 200);
+});
+
+export const userDetail = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const userId = c.get("userId");
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      phrase: true,
+    },
+  });
+
+  if (!user) {
+    return c.json({ error: "User Not Found" }, 404);
+  }
+
+  return c.json(user, 200);
+});
+
+export const editUser = factory.createHandlers(async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json<editUserDetails>();
+
+  const { success, data } = editUserDetails.safeParse(body);
+  if (!success) {
+    return c.json({ error: "Invalid Format" }, 411);
+  }
+
+  const userId = c.get("userId");
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    return c.json({ error: "User Not Found" }, 404);
+  }
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data,
+  });
+
+  return c.json({ success: true }, 200);
 });

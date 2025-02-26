@@ -1,5 +1,6 @@
 import { Hono } from "hono";
-import { signupUser, signInUser } from "../handlers/userHandler";
+import { signupUser, signInUser, userDetail, editUser } from "../handlers/userHandler";
+import { verifyToken } from "../middlewares/verifyToken";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -14,3 +15,7 @@ export const userRouter = new Hono<{
 userRouter.post("/signup", ...signupUser);
 
 userRouter.post("/signin", ...signInUser);
+
+userRouter.get("/", verifyToken, ...userDetail);
+
+userRouter.put("/", verifyToken, ...editUser);

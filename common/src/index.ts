@@ -29,3 +29,11 @@ export const editBlogInput = z.object({
 });
 
 export type editBlogInput = z.infer<typeof editBlogInput>;
+
+export const editUserDetails = z.object({
+  name: z.string().optional(),
+  email: z.string().email().optional(),
+  phrase: z.string().optional(),
+});
+
+export type editUserDetails = z.infer<typeof editUserDetails>;
