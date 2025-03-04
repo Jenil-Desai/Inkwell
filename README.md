@@ -1,4 +1,4 @@
-# 📝 Medium Clone
+# 📝 Inkwell
 
 A fully functional **Medium-like platform** built using modern web technologies. This project focuses on providing a rich, interactive experience for users to create and share content, following the same core principles as Medium.
 
@@ -56,7 +56,7 @@ Follow these steps to set up the project in your local environment:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Jenil-Desai/medium-clone.git
+   git clone https://github.com/Jenil-Desai/inkwell.git
    ```
 2. Install dependencies:
    ```bash
@@ -89,7 +89,7 @@ Follow these steps to set up the project in your local environment:
    ```
 2. Start the project frontend:
    ```bash
-   ccd frontend
+   cd frontend
    npm run dev
    ```
 3. Access the application at `localhost:5173` and explore the website.

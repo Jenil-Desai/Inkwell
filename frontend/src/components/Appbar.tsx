@@ -10,7 +10,7 @@ export default function Appbar() {
   return (
     <div className="border-b grid grid-cols-1 text-center md:flex md:justify-between px-10 py-4 space-y-4">
       <Link to="/" className="flex justify-center flex-col">
-        <div className="flex justify-center flex-col font-bold text-xl cursor-pointer">Medium</div>
+        <div className="flex justify-center flex-col font-bold text-xl cursor-pointer">Inkwell</div>
       </Link>
       <div className="flex justify-center">
         {token ? (
