@@ -131,4 +131,4 @@ This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LIC
 
 ---
 
-### Enjoy exploring and contributing to the Medium Clone!
+### Enjoy exploring and contributing to the Inkwell!
