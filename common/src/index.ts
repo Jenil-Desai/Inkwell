@@ -18,6 +18,7 @@ export type signInInput = z.infer<typeof signInInput>;
 export const createBlogInput = z.object({
   title: z.string(),
   content: z.string(),
+  shortDesc: z.string(),
   published: z.boolean(),
 });
 
@@ -25,6 +26,7 @@ export type createBlogInput = z.infer<typeof createBlogInput>;
 
 export const editBlogInput = z.object({
   title: z.string().optional(),
+  shortDesc: z.string().optional(),
   content: z.string().optional(),
 });
 

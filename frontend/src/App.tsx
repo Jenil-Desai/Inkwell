@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Appbar from "./components/Appbar";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
+import EditPost from "./pages/Edit";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/edit/:id" element={<EditPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

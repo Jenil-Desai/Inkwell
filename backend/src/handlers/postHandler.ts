@@ -24,6 +24,7 @@ export const createPost = factory.createHandlers(async (c) => {
     data: {
       title: body.title,
       content: body.content,
+      shortDesc: body.shortDesc,
       authorId: userId,
       published: body.published,
     },
@@ -41,8 +42,7 @@ export const editPost = factory.createHandlers(async (c) => {
 
   const { success } = editBlogInput.safeParse(body);
   if (!success) {
-    c.status(411);
-    c.json({ error: "Invalid Input" });
+    return c.json({ error: "Invalid Input" }, 411);
   }
 
   const userId = c.get("userId");
@@ -54,6 +54,7 @@ export const editPost = factory.createHandlers(async (c) => {
     },
     data: {
       title: body.title,
+      shortDesc: body.shortDesc,
       content: body.content,
     },
   });
@@ -75,12 +76,15 @@ export const getPost = factory.createHandlers(async (c) => {
     select: {
       id: true,
       title: true,
+      shortDesc: true,
       content: true,
       author: {
         select: {
           name: true,
+          phrase: true,
         },
       },
+      createdAt: true,
     },
   });
 
@@ -94,9 +98,10 @@ export const getBulkPost = factory.createHandlers(async (c) => {
 
   const posts = await prisma.post.findMany({
     select: {
-      content: true,
-      title: true,
       id: true,
+      title: true,
+      shortDesc: true,
+      content: true,
       author: {
         select: {
           name: true,

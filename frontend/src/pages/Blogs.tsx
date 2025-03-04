@@ -24,7 +24,7 @@ export default function Blogs() {
       <div>
         <div>
           {blogs.map((blog) => (
-            <BlogCard key={blog.id} id={blog.id} authorName={blog.author.name || "Anonymous User"} title={blog.title} content={blog.content} publishedDate={"2nd Feb 2024"} />
+            <BlogCard key={blog.id} id={blog.id} authorName={blog.author.name || "Anonymous User"} title={blog.title} content={blog.shortDesc} publishedDate={"2nd Feb 2024"} />
           ))}
         </div>
       </div>

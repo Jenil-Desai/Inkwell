@@ -86,7 +86,7 @@ export default function MyBlogs() {
                     <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} onClick={() => navigate(`/blog/${id}`)}>
                       View
                     </MenuItem>
-                    <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} onClick={() => navigate(`/edit/${id}`)}>
                       Edit
                     </MenuItem>
                     <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} className="text-red-500" onClick={() => deleteBlog(id)}>

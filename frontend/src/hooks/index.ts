@@ -4,11 +4,14 @@ import { BACKEND_URL } from "../constants/Config";
 
 export interface Blog {
   title: string;
+  shortDesc: string;
   content: string;
   id: number;
   author: {
     name: string;
+    phrase: string;
   };
+  createdAt: string;
 }
 
 export interface UserBlog {
